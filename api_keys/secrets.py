@@ -1,0 +1,5 @@
+# Praw keys
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+GOOGLE_EMAIL = ''
+GOOGLE_PASSWORD = ''
