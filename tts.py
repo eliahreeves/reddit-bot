@@ -1,6 +1,11 @@
 import pyttsx3
 import constants as c
-
+import random
+random.seed = 70
+if c.RANDOMIZE_VOICE:
+    voice_id = random.randint(0,1)
+else:
+    voice_id = c.VOICE
 
 def TextToSpeach(string, path):
     engine = pyttsx3.init() # object creation
@@ -17,10 +22,17 @@ def TextToSpeach(string, path):
     """VOICE"""
     voices = engine.getProperty('voices')       #getting details of current voice
     
-    engine.setProperty('voice', voices[c.VOICE].id)   #changing index, changes voices. 1 for female
+    engine.setProperty('voice', voices[voice_id].id)   #changing index, changes voices. 1 for female
 
 
     """Saving Voice to a file"""
     # On linux make sure that 'espeak' and 'ffmpeg' are installed
     engine.save_to_file(string, path)
     engine.runAndWait()
+
+if c.RANDOMIZE_VOICE:
+    voice_id = random.randint(0,1)
+else:
+    voice_id = c.VOICE
+
+print(voice_id)

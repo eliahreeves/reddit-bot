@@ -6,11 +6,10 @@
 import praw
 import constants as c
 from constants import ErrorType
-from gtts import gTTS
 import video_handleing
 import os
 import pull_images
-from Errors import BotError
+from errors import BotError
 import glob
 import re
 import time
@@ -19,7 +18,7 @@ import youtube_upload
 import tts
 
 
-sub_reddit = 'AITAH'  #TODO maybe add a way to pull from multiple subreddits
+sub_reddit = 'tifu'  #TODO maybe add a way to pull from multiple subreddits
 
 reddit = praw.Reddit(client_id = c.CLIENT_ID, client_secret = c.CLIENT_SECRET, user_agent = c.USER_AGENT)
 

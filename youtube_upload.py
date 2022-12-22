@@ -1,6 +1,6 @@
 import subprocess
 import pull_images
-import Errors
+import errors
 
 def upload_video(post_id, subreddit, title, number_of_videos):
     '''
@@ -9,10 +9,10 @@ def upload_video(post_id, subreddit, title, number_of_videos):
     '''
     for i in range(number_of_videos):
         if number_of_videos > 1:
-            title = title + f'Part {i + 1}'
+            vid_title = title + f' Part {i + 1}'
         # Spawn subprocess to upload videos, set up communication
-        print(str(f'completed_videos/{post_id}_v{i}.mp4'), str(subreddit), str(title))
-        p = subprocess.Popen(['python3', 'youtube_child.py', str(f'completed_videos/{post_id}_v{i}.mp4'), str(subreddit), str(title)], 
+        print(str(f'completed_videos/{post_id}_v{i}.mp4'), str(subreddit), str(vid_title))
+        p = subprocess.Popen(['python3', 'youtube_child.py', str(f'completed_videos/{post_id}_v{i}.mp4'), str(subreddit), str(vid_title)], 
                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         # Scan output for url and parse it
@@ -27,7 +27,7 @@ def upload_video(post_id, subreddit, title, number_of_videos):
         # Get the authentication token from the url
         codein = pull_images.GetAuthToken(url)
 
-        if type(codein) == Errors.BotError:
+        if type(codein) == errors.BotError:
             codein.log()
             p.communicate(input='\n'.encode())[0]
             return

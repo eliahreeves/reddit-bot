@@ -10,7 +10,7 @@ import googleapiclient.discovery
 import googleapiclient.errors
 from googleapiclient.http import MediaFileUpload
 
-import Errors
+import errors
 
 # Youtube initialization vars
 scopes = ["https://www.googleapis.com/auth/youtube.upload"]

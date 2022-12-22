@@ -1,11 +1,11 @@
-import Errors
+import errors
 import constants as c
 from playwright.sync_api import sync_playwright, ViewportSize
 import time
 
 def GetAuthToken(url):
     times = 0
-    auth_code = Errors.BotError(Errors.ErrorType.UPLOAD_ERROR, "GetAuthToken")
+    auth_code = errors.BotError(errors.ErrorType.UPLOAD_ERROR, "GetAuthToken")
     while True:
         try:
             times += 1
