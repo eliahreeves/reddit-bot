@@ -8,7 +8,39 @@ def GetVideoLength(filepath):
     input is the file path to a video, output is the duration of the video
     '''
     return mp.AudioFileClip(filepath).duration      #uses moviepy to get duration
+def CompileBodyBasedVideo(post_id, num_of_parts):
+    '''
+    Compiles a video for b based
+    '''
+      #sets file path of screenshot
 
+    for i in range(num_of_parts):
+        if num_of_parts == 1:
+            post_audio = mp.AudioFileClip(f"audio_temp/{post_id}_initial.mp3")
+        else:
+            post_audio = mp.AudioFileClip(f"audio_temp/{post_id}_v{i}.mp3")
+
+        post_image_path = f'image_temp/{post_id}.png'
+
+        background = mp.VideoFileClip(c.BACKGROUND_CLIP)
+        background_size = background.size
+        post = mp.ImageClip(post_image_path).set_duration(post_audio.duration)     #create moviepy image clip
+        #resize and change opacity of image clip then add to list of videos
+        img = PIL.Image.open(post_image_path)
+        wid, hgt = img.size
+        scaleFactor = 1780/hgt
+        if scaleFactor * wid > 940:
+            post = post.resize(width = int(background_size[0] * 0.87))
+        else:
+            post = post.resize(height = int(background_size[1] * 0.92))
+        post = post.set_opacity(c.COMMENT_OPACITY)
+        post.audio = post_audio
+
+        #compiles video from previous steps
+        background = background.set_duration(post.duration)  #cuts background video to correct length
+        video = mp.CompositeVideoClip([background, post.set_position("center")])  #overlays the comments on background
+        video = video.fx( mp.vfx.speedx, c.FINAL_VID_SPEED)
+        video.write_videofile(f'completed_videos/{post_id}_v{i}.mp4', fps=c.VIDEO_FPS)   #saves the video
 def CompileCommentBasedVideo(post_id, comment_ids):
     '''
     input is the id of the main post and the list of the comment ids. Resizes screen shots 
@@ -57,4 +89,4 @@ def CompileCommentBasedVideo(post_id, comment_ids):
     background = background.set_duration(previd.duration)  #cuts background video to correct length
     video = mp.CompositeVideoClip([background, previd.set_position("center")])  #overlays the comments on background
     video = video.fx( mp.vfx.speedx, c.FINAL_VID_SPEED)
-    video.write_videofile(f'completed_videos/{post_id}.mp4', fps=c.VIDEO_FPS)   #saves the video
+    video.write_videofile(f'completed_videos/{post_id}_v0.mp4', fps=c.VIDEO_FPS)   #saves the video

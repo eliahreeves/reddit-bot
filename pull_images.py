@@ -46,6 +46,7 @@ def ScreenShotForLong(id, url):
         page.set_viewport_size(ViewportSize(width = 1080*2, height=1920*2))
     
         page.goto(url)  #navigate to URL
+        time.sleep(3)
         page.locator('[data-test-id="post-content"]').screenshot(path=(f"image_temp/{id}.png")) #gets title screenshot
     
         browser.close()

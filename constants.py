@@ -2,10 +2,14 @@ from enum import Enum, auto
 import api_keys.secrets as s
 
 #general control keys
+MULTI_PART_VIDEOS = True
+MAX_PARTS = 2
+BUFFER_CONSTANT = 10
 MAX_VIDEO_LENGTH = 60
 ALLOWABLE_BODY_LENGTH = 20      #number of characters a comment based post is allowed to have in the body
 ALLOWABLE_TITLE_LENGTH = MAX_VIDEO_LENGTH / 3
 MINIMUM_NUMBER_OF_COMMENTS = 2  #min comments in a post
+MAX_NUMBER_OF_COMMENTS = 12  #max comments to use
 #praw keys
 USER_AGENT = 'Scraper'
 CLIENT_ID = s.CLIENT_ID
@@ -16,12 +20,15 @@ GOOGLE_PASSWORD = s.GOOGLE_PASSWORD
 
 #types of reddit
 COMMENT_BASED = ['AskReddit']
-POST_BODY_BASED = ['tifu']
+POST_BODY_BASED = ['tifu', 'AITAH']
 
 #gTTS constants
 LANG = 'en'
 SLOW = False
-
+#pytts3x constants
+RATE = 240
+VOICE = 1 #0 Male, 1 Female
+VOLUME = 1.0 #Between 0.0 and 1.0
 #moviepy constants
 VIDEO_FPS = 30
 COMMENT_OPACITY = 0.9
